@@ -1,7 +1,7 @@
 # 🎉 mattoGames
 
 **mattoGames** is a multiplatform **Progressive Web App (PWA)** designed to spice up hangouts with friends through a collection of quick, intuitive, and fully offline **mini party games**.  
-Built with **React** (powered by Vite), it runs smoothly on both mobile and desktop devices and can be installed like a native app on **iOS**, **Android**, and **desktop**, without needing any app store.
+Built with **React**, it runs smoothly on both mobile and desktop devices and can be installed like a native app on **iOS**, **Android**, and **desktop**, without needing any app store.
 
 ---
 
@@ -21,44 +21,10 @@ Built with **React** (powered by Vite), it runs smoothly on both mobile and desk
 
 - **React**  
 - **Vite**  
-- **JavaScript/TypeScript** (optional)  
+- **JavaScript/TypeScript**
 - **Service Worker** + **Web App Manifest**  
-- **Tailwind CSS** (optional)
 
 ---
-
-## 📦 Project Setup
-
-```bash
-# Install dependencies
-npm install
-
-# Run development server
-npm run dev
-
-# Build for production
-npm run build
-
-# Preview production build
-npm run preview
-```
-
-📁 Project Structure
-mattoGames/
-│
-├─ public/              # manifest.json, icons, static files
-├─ src/
-│  ├─ games/            # each mini-game in its own folder
-│  ├─ components/       # shared UI components
-│  ├─ hooks/            # custom hooks
-│  ├─ pages/            # main screens
-│  ├─ App.jsx           # root component
-│  ├─ main.jsx          # entry point
-│  └─ service-worker.js # offline handling
-│
-├─ package.json
-├─ vite.config.js
-└─ README.md
 
 🎯 Goal of the Project
 
