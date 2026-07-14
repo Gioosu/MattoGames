@@ -3,9 +3,8 @@ export interface WordEntry {
   clue: string;
 }
 
-// L'impostore vede solo "clue" (se withClue è attivo), gli altri vedono "word".
-// Le clue sono associative (qualcosa di collegato alla parola), non la
-// categoria della parola: es. "Halloween" -> "Zucca", non "Una festività".
+// Impostor only sees clue; others word.
+// Clues are associated to semantic
 export const wordBank: WordEntry[] = [
   { word: "Spiaggia", clue: "Sabbia" },
   { word: "Pizza", clue: "Napoli" },

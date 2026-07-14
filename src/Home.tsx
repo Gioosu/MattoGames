@@ -4,8 +4,8 @@ import logo from "./assets/mg_nobg_white.webp";
 
 const taglines: string[] = [
   "Siete pronti a litigare brutalmente?",
-  "Un telefono, gli amici, si comincia a giocare.",
-  "Stasera qualcuno si arrabbia. Forse tu.",
+  "+MattoGames, -Amici.",
+  "Stasera qualcuno si arrabbia. Forse tu. Forse è Jack.",
   "Niente scuse, si gioca finché non urlate.",
   "Chi perde offre il prossimo giro.",
   "Amicizie a rischio da qui in poi.",
@@ -29,7 +29,7 @@ const games: Game[] = [
     {
         id: "impostor",
         name: "Impostor",
-        players: "3–10 giocatori",
+        players: "4–10 giocatori",
         description: "Qualcuno nasconde qualcosa. Sus!",
         longDescription:
             "Ogni giocatore riceve un ruolo segreto. Tutti conoscono la parola tranne l'impostore, che dovrà confondersi tra gli altri e cercare di non farsi scoprire.",
