@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import logo from "./assets/logo.webp";
+import logo from "./assets/MG_nobg_white.webp";
 
 const taglines: string[] = [
   "Siete pronti a litigare brutalmente?",
