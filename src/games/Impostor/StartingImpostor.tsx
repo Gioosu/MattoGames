@@ -58,14 +58,16 @@ const StartingImpostor = () => {
     const [players, setPlayers] = useState(6);
     const [impostors, setImpostors] = useState(1);
     const [withClue, setWithClue] = useState(true);
+    const [showClueInfo, setShowClueInfo] = useState(false);
 
     const handlePlayersChange = (next: number) => {
         setPlayers(next);
-        // Non ha senso avere più impostori dei giocatori onesti
-        setImpostors((current) => Math.min(current, next - 1));
+        // Non ha senso avere più impostori dei giocatori onesti: devono
+        // restare almeno 2 giocatori che conoscono davvero la parola.
+        setImpostors((current) => Math.min(current, Math.max(1, next - 2)));
     };
 
-    const isValid = players >= MIN_PLAYERS && impostors >= 1 && impostors < players;
+    const isValid = players >= MIN_PLAYERS && impostors >= 1 && impostors <= players - 2;
 
     const handleStart = () => {
         const settings: ImpostorSettings = { players, impostors, withClue };
@@ -115,25 +117,57 @@ const StartingImpostor = () => {
 
                 <div className="flex items-center justify-between gap-4 py-4">
                     <span className="font-body text-cream text-base">Indizio</span>
-                    <button
-                        type="button"
-                        role="switch"
-                        aria-checked={withClue}
-                        onClick={() => setWithClue((current) => !current)}
-                        className={[
-                            "relative w-14 h-8 rounded-full transition-colors duration-200 shrink-0",
-                            withClue ? "bg-hot" : "bg-white/10",
-                        ].join(" ")}
-                    >
-                        <span
+                    <div className="flex items-center gap-3">
+                        <button
+                            type="button"
+                            role="switch"
+                            aria-checked={withClue}
+                            onClick={() => setWithClue((current) => !current)}
                             className={[
-                                "absolute top-1 left-1 w-6 h-6 rounded-full bg-cream shadow transition-transform duration-200",
-                                withClue ? "translate-x-6" : "translate-x-0",
+                                "relative w-14 h-8 rounded-full transition-colors duration-200 shrink-0",
+                                withClue ? "bg-hot" : "bg-white/10",
                             ].join(" ")}
-                        />
-                    </button>
+                        >
+                            <span
+                                className={[
+                                    "absolute top-1 left-1 w-6 h-6 rounded-full bg-cream shadow transition-transform duration-200",
+                                    withClue ? "translate-x-6" : "translate-x-0",
+                                ].join(" ")}
+                            />
+                        </button>
+
+                        <button
+                            type="button"
+                            aria-label="Informazioni su Indizio"
+                            onClick={() => setShowClueInfo(true)}
+                            className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 transition flex items-center justify-center text-cream shrink-0"
+                        >
+                            ℹ️
+                        </button>
+                    </div>
                 </div>
             </main>
+
+            {showClueInfo && (
+                <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-5">
+                    <div className="bg-surface rounded-3xl p-6 max-w-sm w-full shadow-xl">
+                        <h2 className="font-display font-extrabold text-xl text-cream">Indizio</h2>
+                        <p className="font-body text-sm text-muted mt-4">
+                            Se attivo, l'impostore riceve un piccolo indizio collegato
+                            alla parola segreta invece di restare completamente al
+                            buio — rende il gioco più equilibrato con gruppi piccoli
+                            o alle prime partite. Disattivalo per una sfida più dura.
+                        </p>
+                        <button
+                            type="button"
+                            onClick={() => setShowClueInfo(false)}
+                            className="mt-6 w-full bg-hot text-ink font-display font-extrabold py-3 rounded-xl hover:bg-hot/90 transition"
+                        >
+                            Chiudi
+                        </button>
+                    </div>
+                </div>
+            )}
 
             {!isValid && (
                 <p className="font-body text-xs text-muted mt-4">
