@@ -35,6 +35,16 @@ const games: Game[] = [
       "Ogni giocatore riceve un ruolo segreto. Tutti conoscono la parola tranne l'impostore, che dovrà confondersi tra gli altri e cercare di non farsi scoprire.",
     status: "available",
     route: "/impostor",
+  },  
+  {
+    id: "wavelength",
+    name: "Wavelength",
+    players: "2–10 giocatori",
+    description: "Siete sintonizzati? Cavalcando le onde è facile cadere!",
+    longDescription:
+      "Un tema e due poli opposti, una delle due squadre deve fare il nome di qualcosa che è possibile associare al valore per fare indovinare la posizione nel diagramma all'altra squadra.",
+    status: "available",
+    route: "/wavelength",
   },
   {
     id: "psychologist",
