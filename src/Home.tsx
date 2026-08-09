@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "./assets/mg_nobg_white.webp";
 
+const version: string = "1.0.5"
+
 const taglines: string[] = [
   "Siete pronti a litigare brutalmente?",
   "+MattoGames, -Amici.",
@@ -54,6 +56,17 @@ const games: Game[] = [
     longDescription:
       "Un giocatore interpreta il paziente mentre gli altri cercano di capire il suo misterioso sintomo facendo domande e ascoltando attentamente le risposte.",
     status: "available",
+    route: "/psychologist",
+  },
+  {
+    id: "werewolf",
+    name: "Werewolf",
+    players: "6-20 giocatori",
+    description: "Uno o più assassini dovranno fare una strage, riuscirete a fermarli in tempo?",
+    longDescription:
+      "Un narratore racconterà la storia, una volta distribuiti i ruoli calerà la notte e tutti i giocatori dormiranno. Il narratore sveglierà i ruoli uno per uno ed otterrà le informazioni per proseguire con la storia.",
+    status: "available",
+    route: "/werewolf",
   },
   {
     id: "numbers",
@@ -63,15 +76,6 @@ const games: Game[] = [
     longDescription:
       "Collaborate con gli altri giocatori per riuscire a mettervi in ordine senza mai pronunciare numeri. Comunicazione e intuito saranno fondamentali.",
     status: "available",
-  },
-  {
-    id: "soon-1",
-    name: "Prossimamente",
-    players: "?",
-    description: "Un altro gioco matto in arrivo.",
-    longDescription:
-      "Stiamo preparando qualcosa di nuovo. Torna presto per scoprire il prossimo gioco!",
-    status: "soon",
   },
   {
     id: "soon-2",
@@ -124,6 +128,7 @@ const Home = () => {
         <h1 className="font-display font-extrabold text-4xl sm:text-5xl tracking-tight text-cream">
           Matto<span className="text-hot">Games</span>
         </h1>
+        <p className="font-body text-base sm:text-lg max-w-xs">[v{version}]</p>
         <p className="font-body text-muted text-base sm:text-lg max-w-xs">{tagline}</p>
       </header>
 

@@ -39,26 +39,72 @@ interface Band {
   opacity: number;
 }
 
-// Le 5 fasce di punteggio (1-2-4-2-1) centrate sul bersaglio nascosto
-const bandsForTarget = (target: number): Band[] =>
-  [
-    { start: target - 18, end: target - 10, color: "#FFC857", opacity: 0.45 },
-    { start: target - 10, end: target - 4, color: "#FFC857", opacity: 0.85 },
-    { start: target - 4, end: target + 4, color: "#FF5D73", opacity: 1 },
-    { start: target + 4, end: target + 10, color: "#FFC857", opacity: 0.85 },
-    { start: target + 10, end: target + 18, color: "#FFC857", opacity: 0.45 },
-  ].map((b) => ({ ...b, start: Math.max(0, b.start), end: Math.min(100, b.end) }));
+const BAND_OFFSETS = [
+  { deltaStart: -18, deltaEnd: -10, color: "#FFC857", opacity: 0.45 },
+  { deltaStart: -10, deltaEnd: -4, color: "#FFC857", opacity: 0.85 },
+  { deltaStart: -4, deltaEnd: 4, color: "#FF5D73", opacity: 1 },
+  { deltaStart: 4, deltaEnd: 10, color: "#FFC857", opacity: 0.85 },
+  { deltaStart: 10, deltaEnd: 18, color: "#FFC857", opacity: 0.45 },
+];
 
+// "Effetto Pacman": se un intervallo esce da [0, 100], la parte che sporge
+// non viene tagliata ma ricompare dall'altro capo dello spettro. Un intervallo
+// può: stare già dentro (1 pezzo), sporgere completamente da un lato (si
+// sposta tutto di 100, resta 1 pezzo), o essere a cavallo del bordo (si
+// spezza in 2 pezzi, uno per lato).
+const splitWrappedRange = (rawStart: number, rawEnd: number): Array<[number, number]> => {
+  let start = rawStart;
+  let end = rawEnd;
+
+  if (end <= 0) {
+    start += 100;
+    end += 100;
+  } else if (start >= 100) {
+    start -= 100;
+    end -= 100;
+  }
+
+  if (start < 0) {
+    return [
+      [0, end],
+      [start + 100, 100],
+    ];
+  }
+  if (end > 100) {
+    return [
+      [start, 100],
+      [0, end - 100],
+    ];
+  }
+  return [[start, end]];
+};
+
+// Le 5 fasce di punteggio (1-2-4-2-1) centrate sul bersaglio nascosto,
+// avvolte ai bordi se il bersaglio è vicino a un'estremità.
+const bandsForTarget = (target: number): Band[] =>
+  BAND_OFFSETS.flatMap(({ deltaStart, deltaEnd, color, opacity }) =>
+    splitWrappedRange(target + deltaStart, target + deltaEnd).map(([start, end]) => ({
+      start,
+      end,
+      color,
+      opacity,
+    })),
+  );
+
+// Distanza "circolare": su uno spettro che si avvolge, 2 e 98 sono vicini
+// quanto 2 e 6 — bisogna considerare anche il giro dall'altra parte.
 const computeScore = (guess: number, target: number): number => {
-  const diff = Math.abs(guess - target);
+  const direct = Math.abs(guess - target);
+  const diff = Math.min(direct, 100 - direct);
   if (diff <= 4) return 4;
   if (diff <= 10) return 2;
   if (diff <= 18) return 1;
   return 0;
 };
 
-// Target lontano dai bordi, così le fasce da 18 unità ci stanno sempre dentro
-const randomTargetCenter = () => 20 + Math.random() * 60;
+// Ora il bersaglio può cadere ovunque, estremi inclusi: l'avvolgimento
+// sostituisce la vecchia restrizione [20, 80] che serviva a evitare i tagli.
+const randomTargetCenter = () => Math.random() * 100;
 
 const Wavelength = () => {
   const navigate = useNavigate();
@@ -125,7 +171,9 @@ const Wavelength = () => {
         >
           ← Home
         </button>
-        <h1 className="font-display font-extrabold text-3xl text-cream">Wavelength</h1>
+        <h1 className="font-display font-extrabold text-4xl text-cream">
+                    Wave<span className="text-hot">length</span>
+                </h1>
       </header>
 
       <div className="w-full max-w-md bg-surface rounded-3xl p-5 shadow-xl shadow-black/30 flex flex-col items-center gap-4">
