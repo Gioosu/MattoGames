@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import type { ImpostorSettings } from "./StartingWerewolf";
+//import { useEffect, useState } from "react";
+import { /*useLocation,*/ useNavigate } from "react-router-dom";
+//import type { ImpostorSettings } from "./StartingWerewolf";
 
 const PlayingImpostor = () => {
-  const location = useLocation();
+  //const location = useLocation();
   const navigate = useNavigate();
 
 
