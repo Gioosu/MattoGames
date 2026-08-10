@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "./assets/mg_nobg_white.webp";
 
-const version: string = "1.0.5"
+const version: string = "1.1.0"
 
 const taglines: string[] = [
   "Siete pronti a litigare brutalmente?",
